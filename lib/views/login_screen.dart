@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       // 회원가입 버튼 클릭 시 처리
-                      Get.to(SignupScreen());
+                      Get.off(() => SignupScreen());
                     },
                     child: const Text('Sign Up'),
                   ),
