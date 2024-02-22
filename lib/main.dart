@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:peek/controllers/auth_controller.dart';
+import 'package:peek/routes/app_routes.dart';
+import 'package:peek/views/splash_screen.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthController _authController = Get.put(AuthController());
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Hello, World!'),
-        ),
-        body: const Center(
-          child: Text(
-            'Hello, World!',
-            style: TextStyle(fontSize: 24.0),
-          ),
-        ),
-      ),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'GetX Example',
+      initialRoute: '/splash',
+      getPages: AppRoutes.routes,
+      home: const SplashScreen(),
     );
   }
 }
