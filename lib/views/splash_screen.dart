@@ -17,33 +17,42 @@ class SplashScreen extends StatelessWidget {
     // });
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: CustomButton(
-                text: 'Start',
-                onPressed: () {
-                  Get.off(LoginScreen());
-                },
+      body: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('images/eye_image.png'),
+                    CustomButton(
+                      text: 'Start',
+                      onPressed: () {
+                        Get.off(LoginScreen());
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: CustomText(
-              "Hi It's a good day",
-              style: TextStyle(
-                fontSize: 18,
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: CustomText(
+                "Hi It's a good day",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
