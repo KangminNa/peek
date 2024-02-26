@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peek/views/login_screen.dart';
+import 'package:peek/widgets/custom_bottom_text.dart';
 import 'package:peek/widgets/custom_buttom.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -16,13 +17,33 @@ class SplashScreen extends StatelessWidget {
     // });
 
     return Scaffold(
-      body: Center(
-        child: CustomButton(
-          text: 'Start',
-          onPressed: () {
-            Get.off(LoginScreen());
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: CustomButton(
+                text: 'Start',
+                onPressed: () {
+                  Get.off(LoginScreen());
+                },
+              ),
+            ),
+          ),
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomText(
+              "Hi It's a good day",
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+        ],
       ),
     );
   }
