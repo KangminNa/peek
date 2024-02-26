@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:peek/viewmodels/login_viewmodel.dart';
 import 'package:peek/views/signup_screen.dart';
+import 'package:peek/views/splash_screen.dart';
 import 'package:peek/widgets/custom_bottom_text.dart';
 import 'package:peek/widgets/custom_buttom.dart';
 import 'package:peek/widgets/login_sign_textfield.dart';
@@ -17,15 +16,19 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
+    return WillPopScope(
+      onWillPop: () async {
+        Get.off(() => const SplashScreen()); // 뒤로가기를 누르면 로그인 화면으로 이동
+        return false; // WillPopScope에 false 반환하여 뒤로가기 동작을 차단
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Column(
+              children: [
+                Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -37,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: 80,
+                        height: 50,
                       ),
                       CustomTextField(
                         controller: _emailController,
@@ -63,36 +66,39 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CustomText(
-                      "Already have an account? ",
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // SignUp 페이지로 이동하는 코드 추가
-                        Get.off(SignupScreen());
-                      },
-                      child: const Text(
-                        "Sign in",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  height: 80,
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CustomText(
+                        "Already have an account? ",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // SignUp 페이지로 이동하는 코드 추가
+                          Get.off(SignupScreen());
+                        },
+                        child: const Text(
+                          "Sign in",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
