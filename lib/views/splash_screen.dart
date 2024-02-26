@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peek/views/login_screen.dart';
+import 'package:peek/widgets/custom_buttom.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,13 +11,18 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 스플래시 화면이 2초간 보이고, 그 후에 로그인 화면으로 이동
-    Timer(const Duration(seconds: 2), () {
-      Get.off(LoginScreen());
-    });
+    // Timer(const Duration(seconds: 2), () {
+    //   Get.off(LoginScreen());
+    // });
 
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Splash Screen'),
+        child: CustomButton(
+          text: 'Start',
+          onPressed: () {
+            Get.off(LoginScreen());
+          },
+        ),
       ),
     );
   }

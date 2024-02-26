@@ -4,7 +4,6 @@ import 'package:peek/controllers/auth_controller.dart';
 import 'package:peek/routes/app_routes.dart';
 import 'package:peek/views/splash_screen.dart';
 
-
 void main() {
   runApp(MyApp());
 }
