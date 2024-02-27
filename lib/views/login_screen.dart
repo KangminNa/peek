@@ -42,15 +42,33 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 50,
                       ),
-                      CustomTextField(
-                        controller: _emailController,
-                        labelText: 'Email',
+                      Obx(
+                        () => CustomTextField(
+                          controller: _emailController,
+                          labelText: "Email",
+                          onChanged: (value) {
+                            _loginViewModel.validateEmail(value);
+                          },
+                          errorMessageText:
+                              _loginViewModel.emailError.value.isNotEmpty
+                                  ? _loginViewModel.emailError.value
+                                  : null,
+                        ),
                       ),
                       const SizedBox(height: 10),
-                      CustomTextField(
-                        controller: _passwordController,
-                        labelText: 'Password',
-                        obscureText: true,
+                      Obx(
+                        () => CustomTextField(
+                          controller: _passwordController,
+                          labelText: "Password",
+                          onChanged: (value) {
+                            _loginViewModel.validatePassword(value);
+                          },
+                          errorMessageText:
+                              _loginViewModel.passwordError.value.isNotEmpty
+                                  ? _loginViewModel.passwordError.value
+                                  : null,
+                          obscureText: true,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       CustomButton(
