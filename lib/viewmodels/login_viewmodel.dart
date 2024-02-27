@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:peek/controllers/auth_controller.dart';
 import 'package:peek/models/login_model.dart';
-
+import 'package:peek/views/tap_page_screen.dart';
 
 class LoginViewModel extends GetxController {
   final AuthController _authController = Get.find();
@@ -9,5 +9,7 @@ class LoginViewModel extends GetxController {
   void login(String email, String password) {
     var loginData = LoginModel(email: email, password: password);
     _authController.login(loginData);
+
+    Get.off(const TapPage());
   }
 }
