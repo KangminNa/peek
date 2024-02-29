@@ -18,8 +18,7 @@ class AuthController extends GetxController {
   }
 
   void signup(SignupModel signupData) async {
-    final url =
-        Uri.parse('http://localhost:8088/api/auth/signup'); // 서버의 주소로 변경해야 합니다.
+    final url = Uri.parse('http://localhost:8088/api/auth/signup');
     final headers = {'Content-Type': 'application/json'};
     final body = json.encode({
       'email': signupData.email,
@@ -28,16 +27,51 @@ class AuthController extends GetxController {
       'numbering': signupData.numbering,
     });
 
-    final response = await http.post(url, headers: headers, body: body);
+    try {
+      final response = await http.post(url, headers: headers, body: body);
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      // 회원가입이 성공하면 로그인 화면으로 이동
-      Get.off(LoginScreen());
-      // 회원가입 완료 알림 표시
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        // 회원가입이 성공하면 로그인 화면으로 이동
+        Get.off(LoginScreen());
+        // 회원가입 완료 알림 표시
+        Get.dialog(
+          AlertDialog(
+            title: const Text('회원가입 완료'),
+            content: const Text('회원가입이 완료되었습니다. 로그인을 해주세요!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back(); // 알림 창 닫기
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        Get.dialog(
+          AlertDialog(
+            title: const Text('회원가입 오류'),
+            content: const Text('중복된 이메일 혹은 잠시 뒤에 다시 시도해주세요.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back(); // 알림 창 닫기
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          ),
+        );
+        print('Failed to sign up: ${response.statusCode}');
+        // 실패한 경우에 대한 처리를 수행할 수 있습니다.
+      }
+    } catch (e) {
+      // 서버 연결 실패 처리
       Get.dialog(
         AlertDialog(
-          title: const Text('회원가입 완료'),
-          content: const Text('회원가입이 완료되었습니다. 로그인을 해주세요!'),
+          title: const Text('서버 연결 오류'),
+          content: const Text('서버에 연결할 수 없습니다. \n잠시 후 다시 시도해주세요.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -48,23 +82,7 @@ class AuthController extends GetxController {
           ],
         ),
       );
-    } else {
-      Get.dialog(
-        AlertDialog(
-          title: const Text('회원가입 오류'),
-          content: const Text('중복된 이메일 혹은 잠시 뒤에 다시 시도해주세요.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back(); // 알림 창 닫기
-              },
-              child: const Text('확인'),
-            ),
-          ],
-        ),
-      );
-      print('Failed to sign up: ${response.statusCode}');
-      // 실패한 경우에 대한 처리를 수행할 수 있습니다.
+      print('Failed to connect to the server: $e');
     }
   }
 
