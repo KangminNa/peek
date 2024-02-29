@@ -49,6 +49,20 @@ class AuthController extends GetxController {
         ),
       );
     } else {
+      Get.dialog(
+        AlertDialog(
+          title: const Text('회원가입 오류'),
+          content: const Text('중복된 이메일 혹은 잠시 뒤에 다시 시도해주세요.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back(); // 알림 창 닫기
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        ),
+      );
       print('Failed to sign up: ${response.statusCode}');
       // 실패한 경우에 대한 처리를 수행할 수 있습니다.
     }
