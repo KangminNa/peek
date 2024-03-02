@@ -52,7 +52,8 @@ class AuthController extends GetxController {
         Get.dialog(
           AlertDialog(
             title: const Text('회원가입 오류'),
-            content: const Text('중복된 이메일 혹은 잠시 뒤에 다시 시도해주세요.'),
+            content: const Text(
+                '중복된 이메일 혹은 옳지 않은 \nmodel 번호입니다. 반복될 시 하단 \n고객센터로 연락부탁드립니다.'),
             actions: [
               TextButton(
                 onPressed: () {
