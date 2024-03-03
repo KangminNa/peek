@@ -6,15 +6,44 @@ import 'package:http/http.dart' as http;
 import 'package:peek/models/login_model.dart';
 import 'package:peek/models/signup_model.dart';
 import 'package:peek/models/user_model.dart';
+import 'package:peek/views/home_view.dart';
 import 'package:peek/views/login_screen.dart';
+import 'package:peek/views/tap_page_screen.dart';
 
 class AuthController extends GetxController {
-  var user = User(token: '').obs; // 사용자 정보를 관리합니다.
+  var user = User(token: '').obs;
 
-  void login(LoginModel loginData) {
-    // 로그인 로직을 구현합니다.
-    // 성공 시 user 정보 업데이트
-    // loginData.email, loginData.password를 사용하여 로그인 처리
+  Future<void> login(LoginModel loginData) async {
+    final url = Uri.parse('http://localhost:8088/api/auth/login');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({
+      'email': loginData.email,
+      'password': loginData.password,
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        final token = json.decode(response.body)['token'];
+        user.value = User(token: token);
+        Get.off(const TapPage()); // 로그인이 성공하면 홈 화면으로 이동
+      } else {
+        // 로그인 실패 시 에러 처리
+        Get.snackbar(
+          '로그인 실패',
+          '이메일 또는 비밀번호를 확인하세요.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      print('Failed to connect to the server: $e');
+      // 서버 연결 실패 처리
+      Get.snackbar(
+        '서버 연결 오류',
+        '서버에 연결할 수 없습니다. 잠시 후 다시 시도하세요.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   void signup(SignupModel signupData) async {

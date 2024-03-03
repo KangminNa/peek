@@ -1,5 +1,5 @@
 class User {
-  final String token;
+  late final String token;
 
   User({required this.token});
 }

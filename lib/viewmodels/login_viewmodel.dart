@@ -17,7 +17,6 @@ class LoginViewModel extends GetxController {
     if (emailError.isEmpty && passwordError.isEmpty) {
       var loginData = LoginModel(email: email, password: password);
       _authController.login(loginData);
-      Get.off(const TapPage());
     }
   }
 

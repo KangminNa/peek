@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class LoginModel {
   final String email;
   final String password;
